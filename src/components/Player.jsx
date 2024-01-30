@@ -1,24 +1,34 @@
 import React, { useState } from 'react'
 
-const Player = ({ name, symbol }) => {
+const Player = ({ initialName, symbol }) => {
+    const [playerName, setPlayerName] = useState(initialName);
 
     const [isEditing, setIsEditing] = useState(false);
+
     function handleEditClick() {
-        setIsEditing(true);
+        setIsEditing((editing) => !isEditing);
     }
-    let playerName = <span className="player-name">{name}</span>
+
+    function handleChange(event) {
+        console.log(event);
+        setPlayerName(event.target.value);
+    }
+
+    let editablePlayerName = <span className="player-name">{playerName}</span>
 
     if (isEditing) {
-        playerName = <input type="text" required autoFocus />
+        editablePlayerName = <input type="text" required value={playerName} onChange={handleChange} />
+        //defaultValue: just set an initial value instead of enforcing a value thereafter.
+        // value: overwrites any changes we're trying to do.
     }
 
     return (
         <li>
             <span className="player">
-                {playerName}
+                {editablePlayerName}
                 <span className="player-symbol">{symbol}</span>
             </span>
-            <button onClick={handleEditClick}>Edit</button>
+            <button onClick={handleEditClick}>{isEditing ? 'Save' : 'Edit'}</button>
         </li>
     )
 }
