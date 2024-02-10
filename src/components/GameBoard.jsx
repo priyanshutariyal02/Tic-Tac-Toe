@@ -1,7 +1,4 @@
 import React, { useState } from 'react'
-
-
-
 const Gameboard = ({ onSelectSquare, board }) => {
     return (
         <ol id="game-board">
